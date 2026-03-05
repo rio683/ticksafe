@@ -27,9 +27,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg,
-            rgba(10, 77, 60, 0.9) 0%,
-            rgba(22, 126, 99, 0.75) 100%);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(10, 77, 60, 0.95) 40%,
+            rgba(10, 77, 60, 0.9) 100%);
     z-index: -1;
 }
 
@@ -88,18 +89,40 @@
 @media (min-width: 768px) {
     .hero-title {
         font-size: 4rem;
+        margin-bottom: var(--spacing-md);
     }
 
     .hero-subtitle {
         font-size: 1.25rem;
+        margin-top: var(--spacing-lg);
     }
 
     .hero-actions {
         flex-direction: row;
         max-width: none;
         justify-content: center;
+        margin-bottom: var(--spacing-md);
     }
 }
+
+/* Adjustments for white top visibility */
+.hero-title {
+    color: var(--color-primary);
+    /* Use deep green instead of white for better contrast at the top */
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    /* Subtle light shadow to help if it sits on green */
+}
+
+.hero-subtitle {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: var(--spacing-lg) auto 0 auto;
+    opacity: 0.9;
+}
+
 
 /* Base button styling already in globals.css, adding outline variant */
 .btn-outline {

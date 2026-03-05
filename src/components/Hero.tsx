@@ -28,11 +28,6 @@ export default function Hero({ onOpenQuote }: { onOpenQuote: () => void }) {
                     <span className="text-secondary">Dangerous Ticks & Mosquitoes</span>
                 </h1>
 
-                <p className="hero-subtitle animate-fade-in delay-200">
-                    We provide the Gold Standard in tick and mosquito control for your garden.
-                    Don't risk the rising threat of tick-borne allergies. Secure your peace of mind today.
-                </p>
-
                 <div className="hero-actions animate-fade-in delay-300">
                     <button onClick={onOpenQuote} className="btn btn-primary btn-large cta-pulse">
                         Get a free quote now
@@ -42,6 +37,11 @@ export default function Hero({ onOpenQuote }: { onOpenQuote: () => void }) {
                         Call Now 1300 842 572
                     </a>
                 </div>
+
+                <p className="hero-subtitle animate-fade-in delay-200">
+                    We provide the Gold Standard in tick and mosquito control for your garden.
+                    Don't risk the rising threat of tick-borne allergies. Secure your peace of mind today.
+                </p>
 
                 <div className="mt-12 text-center animate-fade-in delay-300" style={{ marginTop: '3rem' }}>
                     <img
