@@ -25,7 +25,7 @@ export default function Hero({ onOpenQuote }: { onOpenQuote: () => void }) {
 
                 <h1 className="hero-title animate-fade-in delay-100">
                     Protect Your Family From<br />
-                    <span className="text-secondary">Dangerous Ticks & Mosquitoes</span>
+                    <span style={{ color: 'black' }}>Dangerous</span> <span className="text-secondary">Ticks & Mosquitoes</span>
                 </h1>
 
                 <p className="hero-subtitle animate-fade-in delay-200">
