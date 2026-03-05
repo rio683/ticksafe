@@ -60,6 +60,19 @@
     background-color: rgba(0, 0, 0, 0.05);
 }
 
+@media (max-width: 767px) {
+    .modal-close-btn {
+        top: 24px;
+        /* Slightly adjusted for mobile centering within overlay */
+    }
+
+    .modal-overlay {
+        align-items: flex-start;
+        /* Better for long forms on mobile */
+        padding-top: var(--spacing-xl);
+    }
+}
+
 .modal-icon {
     margin: 0 auto var(--spacing-sm) auto;
 }
