@@ -43,13 +43,7 @@ export default function Hero({ onOpenQuote }: { onOpenQuote: () => void }) {
                     Don't risk the rising threat of tick-borne allergies. Secure your peace of mind today.
                 </p>
 
-                <div className="mt-12 text-center animate-fade-in delay-300" style={{ marginTop: '3rem' }}>
-                    <img
-                        src="/no_ticks_mosquitoes.png"
-                        alt="No Ticks and Mosquitoes"
-                        style={{ maxWidth: '180px', height: 'auto', margin: '0 auto' }}
-                    />
-                </div>
+
             </div>
         </section>
     );
