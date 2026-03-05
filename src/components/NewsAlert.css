@@ -1,0 +1,117 @@
+.news-alert-section {
+    padding: var(--spacing-xl) 0 var(--spacing-md) 0;
+    background-color: var(--color-background);
+    /* Pulling the section up slightly over the hero */
+    margin-top: -60px;
+    position: relative;
+    z-index: 10;
+}
+
+.alert-card {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    border-left: 6px solid var(--color-danger);
+    background: white;
+    /* Solid white background for readability */
+}
+
+.alert-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background-color: #fdf2f2;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    margin: 0 auto;
+}
+
+.alert-heading {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.alert-text {
+    color: var(--color-text-main);
+    font-size: 1.05rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.alert-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+}
+
+.text-link {
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.text-link:hover {
+    color: var(--color-danger);
+}
+
+.ml-xs {
+    margin-left: 4px;
+}
+
+.mr-sm {
+    margin-right: 16px;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.bounce-subtle {
+    animation: bounceSubtle 3s ease-in-out infinite;
+}
+
+@keyframes bounceSubtle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@media (min-width: 768px) {
+    .alert-card {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-lg);
+    }
+
+    .alert-icon-container {
+        margin: 0;
+    }
+
+    .alert-actions {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .mt-2 {
+        margin-top: 0;
+    }
+
+    .md\:mt-0 {
+        margin-top: 0;
+    }
+}
