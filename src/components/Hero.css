@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    padding: 40px 0 var(--spacing-xl) 0;
+    padding: 30px 0 var(--spacing-md) 0;
 }
 
 .hero-background {
@@ -30,7 +30,8 @@
     height: 100%;
     background: linear-gradient(180deg,
             rgba(255, 255, 255, 1) 0%,
-            rgba(10, 77, 60, 0.95) 40%,
+            rgba(255, 255, 255, 1) 20%,
+            rgba(10, 77, 60, 0.95) 50%,
             rgba(10, 77, 60, 0.9) 100%);
     z-index: -1;
 }
