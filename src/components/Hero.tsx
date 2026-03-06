@@ -15,7 +15,7 @@ export default function Hero({ onOpenQuote }: { onOpenQuote: () => void }) {
                 <img
                     src="/logo.png"
                     alt="TickSafe Logo"
-                    style={{ height: '80px', marginBottom: '3.5rem' }}
+                    style={{ height: '80px', marginBottom: '5.5rem' }}
                     className="animate-fade-in"
                 />
                 <div className="badge animate-fade-in">
