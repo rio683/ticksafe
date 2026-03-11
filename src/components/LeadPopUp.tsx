@@ -9,15 +9,45 @@ interface LeadPopUpProps {
 
 export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
     const [submitted, setSubmitted] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Simulate API call for lead capturing
-        setSubmitted(true);
-        setTimeout(() => {
-            onClose();
-            setSubmitted(false);
-        }, 3000);
+        setSubmitting(true);
+
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            first_name: formData.get('first_name'),
+            last_name: formData.get('last_name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            message: formData.get('message'),
+        };
+
+        try {
+            const response = await fetch('/api/lead', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                setSubmitted(true);
+                setTimeout(() => {
+                    onClose();
+                    setSubmitted(false);
+                }, 4000);
+            } else {
+                console.error('Submission failed');
+                // You could add an error state here if needed
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     if (!isOpen) return null;
@@ -41,34 +71,34 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
                             </div>
 
                             <form onSubmit={handleSubmit} className="lead-form">
-                                <div className="form-group">
-                                    <label htmlFor="name">Full Name *</label>
-                                    <input type="text" id="name" required placeholder="John Doe" />
+                                <div className="form-row">
+                                    <div className="form-group flex-1">
+                                        <label htmlFor="first_name">First Name *</label>
+                                        <input type="text" id="first_name" name="first_name" required placeholder="John" />
+                                    </div>
+                                    <div className="form-group flex-1">
+                                        <label htmlFor="last_name">Last Name *</label>
+                                        <input type="text" id="last_name" name="last_name" required placeholder="Doe" />
+                                    </div>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="phone">Phone Number *</label>
-                                    <input type="tel" id="phone" required placeholder="0400 000 000" />
+                                    <input type="tel" id="phone" name="phone" required placeholder="0400 000 000" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="email">Email Address</label>
-                                    <input type="email" id="email" placeholder="john@example.com" />
+                                    <label htmlFor="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="john@example.com" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="service">Primary Concern *</label>
-                                    <select id="service" required>
-                                        <option value="">Select an option</option>
-                                        <option value="ticks">Tick Control (Urgent)</option>
-                                        <option value="mosquitoes">Mosquito Control</option>
-                                        <option value="both">Both Ticks & Mosquitoes</option>
-                                        <option value="event">Special Event Treatment</option>
-                                    </select>
+                                    <label htmlFor="message">Message *</label>
+                                    <textarea id="message" name="message" required placeholder="How can we help you?" rows={3}></textarea>
                                 </div>
 
-                                <button type="submit" className="btn btn-primary modal-submit">
-                                    Get My Free Quote
+                                <button type="submit" className="btn btn-primary modal-submit" disabled={submitting}>
+                                    {submitting ? 'Submitting...' : 'Get My Free Quote'}
                                 </button>
 
                                 <p className="privacy-note">
@@ -81,7 +111,7 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
                             <CheckCircle size={64} className="text-primary success-icon" />
                             <h2 className="modal-title">Request Received!</h2>
                             <p className="modal-subtitle">
-                                Thank you for choosing TickSafe. One of our experts will be in touch with you shortly.
+                                Thank you. Our team will contact you shortly.
                             </p>
                         </div>
                     )}
