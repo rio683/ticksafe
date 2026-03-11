@@ -16,33 +16,36 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
         setSubmitting(true);
 
         const formData = new FormData(e.currentTarget);
-        const data = {
-            first_name: formData.get('first_name'),
-            last_name: formData.get('last_name'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            message: formData.get('message'),
-        };
+        
+        const payload = new URLSearchParams();
+        payload.append('input_1.3', (formData.get('first_name') as string) || '');
+        payload.append('input_1.6', (formData.get('last_name') as string) || '');
+        payload.append('input_3', (formData.get('email') as string) || '');
+        payload.append('input_4', (formData.get('phone') as string) || '');
+        payload.append('input_5', (formData.get('message') as string) || '');
+        payload.append('input_7', ''); // Honeypot
+        payload.append('is_submit_2', '1');
+        payload.append('gform_submit', '2');
+        payload.append('gform_target_page_number_2', '0');
+        payload.append('gform_source_page_number_2', '1');
 
         try {
-            const response = await fetch('/api/lead', {
+            await fetch('https://ticksafe.com.au/', {
                 method: 'POST',
+                mode: 'no-cors', // Standard HTML form post behavior to bypass CORS restrictions
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(data),
+                body: payload.toString(),
             });
 
-            if (response.ok) {
-                setSubmitted(true);
-                setTimeout(() => {
-                    onClose();
-                    setSubmitted(false);
-                }, 4000);
-            } else {
-                console.error('Submission failed');
-                // You could add an error state here if needed
-            }
+            // With no-cors, we can't read the exact HTTP response status, 
+            // so we assume success if no network exception was thrown.
+            setSubmitted(true);
+            setTimeout(() => {
+                onClose();
+                setSubmitted(false);
+            }, 4000);
         } catch (error) {
             console.error('Error submitting form:', error);
         } finally {
