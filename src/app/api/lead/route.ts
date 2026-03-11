@@ -14,12 +14,14 @@ export async function POST(request: Request) {
             );
         }
 
-        // 1. Fetch the original form to get fresh tokens
-        const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+        // 1. Fetch the original form to get fresh tokens and cookies
+        const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36';
         const siteResponse = await fetch('https://ticksafe.com.au/', {
             headers: { 'User-Agent': userAgent }
         });
         const html = await siteResponse.text();
+        const cookies = siteResponse.headers.get('set-cookie');
+        
         const $ = cheerio.load(html);
 
         // Find the form with ID 2
@@ -38,78 +40,64 @@ export async function POST(request: Request) {
             if (name) payload[name] = value || '';
         });
 
-        // Mapping visible fields to Gravity Forms IDs
+        // 2. Mapping visible fields to Gravity Forms IDs precisely
         payload['input_1.3'] = first_name;
         payload['input_1.6'] = last_name;
         payload['input_3'] = email || '';
         payload['input_4'] = phone;
         payload['input_5'] = message;
         
-        // HoneyPot field (should be empty)
-        payload['input_7'] = ''; 
-        
-        // Placeholder for reCAPTCHA (Presence might be required even if token is invalid/empty)
-        payload['g-recaptcha-response'] = '';
-
-        // Essential Gravity Forms control fields (ensuring they exist)
+        // Anti-spam & Control Fields for Form ID 2
+        payload['input_7'] = ''; // HoneyPot field should be empty
+        payload['g-recaptcha-response'] = ''; // Ensure field exists
         payload['is_submit_2'] = '1';
         payload['gform_submit'] = '2';
         payload['gform_target_page_number_2'] = '0';
         payload['gform_source_page_number_2'] = '1';
-        payload['gform_submission_method'] = payload['gform_submission_method'] || 'postback';
-        payload['gform_theme'] = payload['gform_theme'] || 'gravity-theme';
 
-        // 2. Prepare the payload for submission
         const formData = new URLSearchParams();
         Object.entries(payload).forEach(([name, value]) => {
             formData.append(name, value);
         });
 
-        // 3. Submit to the main site backend
+        const postHeaders: Record<string, string> = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'User-Agent': userAgent,
+            'Referer': 'https://ticksafe.com.au/',
+            'Origin': 'https://ticksafe.com.au',
+        };
+
+        if (cookies) {
+             postHeaders['Cookie'] = cookies;
+        }
+
+        // 3. Submit directly to the main site backend Gravity Forms endpoint
         const submitResponse = await fetch('https://ticksafe.com.au/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': userAgent,
-                'Referer': 'https://ticksafe.com.au/',
-                'Origin': 'https://ticksafe.com.au',
-            },
+            headers: postHeaders,
             body: formData.toString(),
             redirect: 'manual' 
         });
 
         const status = submitResponse.status;
         const responseBody = await submitResponse.text();
-
-        // Gravity Forms usually redirects (302) to a thank you page on success
-        // or returns 200 with the form rendered again (indicating validation error)
-        const isSuccess = status === 302 || (status === 200 && (responseBody.includes('thank-you') || responseBody.includes('gform_confirmation_message')));
-
-        if (isSuccess) {
-            console.log(`Submission successful. Status: ${status}`);
-            return NextResponse.json({ 
-                message: 'Success',
-                debug_status: status,
-                // debug_body: responseBody.substring(0, 500) 
-            }, { status: 200 });
-        } else {
-            // Log full response for debugging in Vercel
-            console.error(`Submission failed. Status: ${status}. Body Snippet: ${responseBody.substring(0, 1000)}`);
-            
-            // If we find evidence of reCAPTCHA failure in the body
-            if (responseBody.includes('grecaptcha') || responseBody.includes('reCAPTCHA')) {
-                 return NextResponse.json({ 
-                    message: 'reCAPTCHA blocked', 
-                    details: 'The target site requires a valid reCAPTCHA token.' 
-                }, { status: 403 });
-            }
-
-            return NextResponse.json({ 
-                message: 'External submission failed',
-                status: status,
-                debug_body: responseBody.substring(0, 500)
-            }, { status: 502 });
+        
+        // Log outcome for debugging
+        const $res = cheerio.load(responseBody);
+        const validationError = $res('.gform_validation_errors').text().trim();
+        
+        if (validationError) {
+             console.error(`Gravity Forms Validation Error: ${validationError}`);
+             $res('.gfield_error').each((_, el) => {
+                 console.error(`Field Error Details: ${$res(el).text().trim()}`);
+             });
         }
+
+        // Always return success to the UI as requested
+        return NextResponse.json({ 
+            message: 'Success',
+            proxy_status: status
+        }, { status: 200 });
 
     } catch (error) {
         console.error('Error in lead proxy:', error);
