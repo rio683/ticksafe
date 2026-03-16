@@ -10,43 +10,45 @@ interface LeadPopUpProps {
 export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmitting(true);
+        setError(null);
 
         const formData = new FormData(e.currentTarget);
-        
-        const payload = new URLSearchParams();
-        payload.append('input_1.3', (formData.get('first_name') as string) || '');
-        payload.append('input_1.6', (formData.get('last_name') as string) || '');
-        payload.append('input_3', (formData.get('email') as string) || '');
-        payload.append('input_4', (formData.get('phone') as string) || '');
-        payload.append('input_5', (formData.get('message') as string) || '');
-        payload.append('input_7', ''); // Honeypot
-        payload.append('is_submit_2', '1');
-        payload.append('gform_submit', '2');
-        payload.append('gform_target_page_number_2', '0');
-        payload.append('gform_source_page_number_2', '1');
+        const data = {
+            first_name: formData.get('first_name'),
+            last_name: formData.get('last_name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            message: formData.get('message'),
+            source_url: typeof window !== 'undefined' ? window.location.href : '',
+        };
 
         try {
-            await fetch('https://ticksafe.com.au/', {
+            const response = await fetch('/api/lead', {
                 method: 'POST',
-                mode: 'no-cors', // Standard HTML form post behavior to bypass CORS restrictions
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                body: payload.toString(),
+                body: JSON.stringify(data),
             });
 
-            // With no-cors, we can't read the exact HTTP response status, 
-            // so we assume success if no network exception was thrown.
-            setSubmitted(true);
-            setTimeout(() => {
-                onClose();
-                setSubmitted(false);
-            }, 4000);
+            if (response.ok) {
+                setSubmitted(true);
+                setTimeout(() => {
+                    onClose();
+                    setSubmitted(false);
+                }, 4000);
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'Submission failed. Please try again or call us directly.');
+                console.error('Submission failed:', errorData);
+            }
         } catch (error) {
+            setError('A network error occurred. Please check your connection and try again.');
             console.error('Error submitting form:', error);
         } finally {
             setSubmitting(false);
@@ -71,6 +73,11 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
                                 <p className="modal-subtitle">
                                     Don't wait. Enter your details below and our Central Coast experts will contact you for a free assessment.
                                 </p>
+                                {error && (
+                                    <div className="error-message">
+                                        {error}
+                                    </div>
+                                )}
                             </div>
 
                             <form onSubmit={handleSubmit} className="lead-form">

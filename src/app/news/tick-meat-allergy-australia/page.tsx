@@ -24,6 +24,16 @@ export default function JeremyWebbArticle() {
 
             <article className="article-container">
                 <div className="container">
+                    <div className="article-hero-cta">
+                        <CTASection
+                            styleVariant="heroBanner"
+                            message={`Call now to remove ticks\nfrom your property.`}
+                            buttonText="CALL NOW 1300 842 572"
+                            onButtonClick={() => {}}
+                            secondaryButtonLink="tel:1300842572"
+                        />
+                    </div>
+
                     <VideoEmbed
                         videoId="6sBuN_pRgcs"
                         title="Teenager Jeremy Webb died of meat allergy from tick bites"
@@ -89,8 +99,10 @@ export default function JeremyWebbArticle() {
                         <CTASection
                             styleVariant="banner"
                             message="Don't risk your family's safety. Tick bites can cause serious allergic reactions. Secure your home today."
-                            buttonText="Protect Your Home Now"
+                            buttonText="PROTECT YOUR HOME NOW"
                             onButtonClick={handleOpenQuote}
+                            secondaryButtonText="CALL NOW 1300 842 572"
+                            secondaryButtonLink="tel:1300842572"
                         />
 
                         <h2>Increasing Risks Along the Coast</h2>

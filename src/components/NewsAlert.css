@@ -7,6 +7,20 @@
     z-index: 10;
 }
 
+.alert-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.alert-card-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
 .alert-card {
     padding: var(--spacing-lg);
     display: flex;

@@ -6,7 +6,11 @@ interface CTASectionProps {
     message: string;
     buttonText: string;
     onButtonClick: () => void;
-    styleVariant?: 'card' | 'inline' | 'banner' | 'sidePop' | 'floating' | 'miniBanner';
+    secondaryButtonText?: string;
+    secondaryButtonLink?: string;
+    mobileButtonText?: string;  // Shorter button text on mobile
+    phoneDisplay?: string;       // Phone number shown below button on mobile
+    styleVariant?: 'card' | 'inline' | 'banner' | 'sidePop' | 'floating' | 'miniBanner' | 'heroBanner';
     scrollThreshold?: number; // For sidePop and floating
 }
 
@@ -14,6 +18,10 @@ export default function CTASection({
     message,
     buttonText,
     onButtonClick,
+    secondaryButtonText,
+    secondaryButtonLink,
+    mobileButtonText,
+    phoneDisplay,
     styleVariant = 'card',
     scrollThreshold = 400
 }: CTASectionProps) {
@@ -57,6 +65,50 @@ export default function CTASection({
         );
     }
 
+    if (styleVariant === 'heroBanner') {
+        return (
+            <div className={`cta-section ${styleVariant}`}>
+                <div className="cta-content">
+                    <p className="cta-message">{message}</p>
+                    <div className="cta-actions">
+                        {buttonText && !secondaryButtonText ? (
+                            <>
+                                <a 
+                                    href={secondaryButtonLink} 
+                                    className="btn cta-button btn-secondary-outline cta-animate-pulse-brand"
+                                >
+                                    {mobileButtonText ? (
+                                        <>
+                                            <span className="btn-text-desktop">{buttonText}</span>
+                                            <span className="btn-text-mobile">{mobileButtonText}</span>
+                                        </>
+                                    ) : buttonText}
+                                </a>
+                                {phoneDisplay && (
+                                    <p className="cta-phone-display">{phoneDisplay}</p>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <button onClick={onButtonClick} className="btn cta-button btn-primary">
+                                    {buttonText} <ArrowRight size={20} style={{ marginLeft: '8px' }} />
+                                </button>
+                                {secondaryButtonText && (
+                                    <a 
+                                        href={secondaryButtonLink} 
+                                        className="btn cta-button btn-secondary-outline cta-animate-pulse-brand"
+                                    >
+                                        {secondaryButtonText}
+                                    </a>
+                                )}
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={`cta-section ${styleVariant}`}>
             {styleVariant === 'sidePop' && (
@@ -66,9 +118,19 @@ export default function CTASection({
             )}
             <div className="cta-content">
                 <p className="cta-message">{message}</p>
-                <button onClick={onButtonClick} className={`btn cta-button ${styleVariant === 'banner' ? 'btn-light' : 'btn-primary'}`}>
-                    {buttonText} <ArrowRight size={20} style={{ marginLeft: '8px' }} />
-                </button>
+                <div className="cta-actions">
+                    <button onClick={onButtonClick} className={`btn cta-button ${styleVariant === 'banner' ? 'btn-light' : 'btn-primary'}`}>
+                        {buttonText} <ArrowRight size={20} style={{ marginLeft: '8px' }} />
+                    </button>
+                    {secondaryButtonText && (
+                        <a 
+                            href={secondaryButtonLink} 
+                            className={`btn cta-button ${styleVariant === 'banner' ? 'btn-outline-white cta-animate-pulse' : 'btn-secondary-outline cta-animate-pulse'}`}
+                        >
+                            {secondaryButtonText}
+                        </a>
+                    )}
+                </div>
             </div>
         </div>
     );

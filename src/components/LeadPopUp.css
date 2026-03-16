@@ -99,6 +99,17 @@
     margin-bottom: var(--spacing-lg);
 }
 
+.error-message {
+    background-color: #fff5f5;
+    color: #e53e3e;
+    padding: var(--spacing-sm);
+    border-radius: 6px;
+    border: 1px solid #feb2b2;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
 .lead-form {
     display: flex;
     flex-direction: column;
