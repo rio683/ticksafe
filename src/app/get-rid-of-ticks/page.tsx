@@ -87,9 +87,14 @@ export default function GetRidOfTicksPage() {
                 <div className="hero-text-half animate-fade-in-up">
                     <h1>We Get Rid Of Ticks</h1>
                     <p>Don’t let you or your children get bitten by ticks....</p>
-                    <button onClick={handleOpenQuote} className="btn-hero-dark animate-pulse">
-                        LETS CHAT
-                    </button>
+                    <div className="hero-cta-group">
+                        <button onClick={handleOpenQuote} className="btn-hero-dark animate-pulse">
+                            LETS CHAT
+                        </button>
+                        <a href="tel:1300842572" className="btn-hero-outline">
+                            CALL NOW 1300 842 572
+                        </a>
+                    </div>
                 </div>
             </section>
 
@@ -144,10 +149,11 @@ export default function GetRidOfTicksPage() {
                     <CTASection 
                         styleVariant="heroBanner"
                         message="Ready to reclaim your backyard safely?"
-                        buttonText="GET YOUR FREE QUOTE"
-                        onButtonClick={handleOpenQuote}
-                        secondaryButtonLink="tel:1300842572"
-                        mobileButtonText="FREE QUOTE"
+                        buttonText="CALL NOW 1300 842 572"
+                        onButtonClick={() => window.location.href = 'tel:1300842572'}
+                        secondaryButtonText="LETS CHAT"
+                        secondaryButtonLink="#"
+                        onSecondaryButtonClick={handleOpenQuote}
                     />
                 </div>
             </section>

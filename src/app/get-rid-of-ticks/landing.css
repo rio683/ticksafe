@@ -71,6 +71,13 @@
     font-weight: 500;
 }
 
+.hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .btn-hero-dark {
     background-color: #222;
     color: white;
@@ -83,6 +90,30 @@
     font-size: 1.125rem;
     letter-spacing: 1px;
     transition: background-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-hero-outline {
+    background-color: transparent;
+    color: #222;
+    padding: 1.15rem 2.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #222;
+    cursor: pointer;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-hero-outline:hover {
+    background-color: #222;
+    color: #fce154;
+    transform: translateY(-2px);
 }
 
 .btn-hero-dark:hover {

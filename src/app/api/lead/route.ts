@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         const { first_name, last_name, email, phone, message, source_url } = body;
 
         // Validation
-        if (!first_name || !last_name || !phone || !message) {
+        if (!first_name || !last_name || !phone) {
             return NextResponse.json(
                 { message: 'Missing required fields' },
                 { status: 400 }
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         }
 
         const fromAddress = process.env.RESEND_FROM || 'TickSafe Leads <leads@ticksafenews.com>';
-        const toAddressInput = process.env.RESEND_TO || 'rio@mindsheep.com.au';
+        const toAddressInput = process.env.RESEND_TO || 'rio@mindsheep.com.au, info@ticksafe.com.au';
         const toAddresses = toAddressInput.split(',').map(email => email.trim());
 
         const { data, error } = await resend.emails.send({

@@ -100,13 +100,13 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="email">Email Address *</label>
-                                    <input type="email" id="email" name="email" required placeholder="john@example.com" />
+                                    <label htmlFor="email">Email Address</label>
+                                    <input type="email" id="email" name="email" placeholder="john@example.com" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="message">Message *</label>
-                                    <textarea id="message" name="message" required placeholder="How can we help you?" rows={3}></textarea>
+                                    <label htmlFor="message">Message</label>
+                                    <textarea id="message" name="message" placeholder="How can we help you?" rows={3}></textarea>
                                 </div>
 
                                 <button type="submit" className="btn btn-primary modal-submit" disabled={submitting}>

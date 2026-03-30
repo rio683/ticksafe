@@ -8,6 +8,7 @@ interface CTASectionProps {
     onButtonClick: () => void;
     secondaryButtonText?: string;
     secondaryButtonLink?: string;
+    onSecondaryButtonClick?: () => void;
     mobileButtonText?: string;  // Shorter button text on mobile
     phoneDisplay?: string;       // Phone number shown below button on mobile
     styleVariant?: 'card' | 'inline' | 'banner' | 'sidePop' | 'floating' | 'miniBanner' | 'heroBanner';
@@ -20,6 +21,7 @@ export default function CTASection({
     onButtonClick,
     secondaryButtonText,
     secondaryButtonLink,
+    onSecondaryButtonClick,
     mobileButtonText,
     phoneDisplay,
     styleVariant = 'card',
@@ -94,12 +96,21 @@ export default function CTASection({
                                     {buttonText} <ArrowRight size={20} style={{ marginLeft: '8px' }} />
                                 </button>
                                 {secondaryButtonText && (
-                                    <a 
-                                        href={secondaryButtonLink} 
-                                        className="btn cta-button btn-secondary-outline cta-animate-pulse-brand"
-                                    >
-                                        {secondaryButtonText}
-                                    </a>
+                                    onSecondaryButtonClick ? (
+                                        <button 
+                                            onClick={onSecondaryButtonClick}
+                                            className="btn cta-button btn-secondary-outline cta-animate-pulse-brand"
+                                        >
+                                            {secondaryButtonText}
+                                        </button>
+                                    ) : (
+                                        <a 
+                                            href={secondaryButtonLink} 
+                                            className="btn cta-button btn-secondary-outline cta-animate-pulse-brand"
+                                        >
+                                            {secondaryButtonText}
+                                        </a>
+                                    )
                                 )}
                             </>
                         )}
@@ -123,12 +134,21 @@ export default function CTASection({
                         {buttonText} <ArrowRight size={20} style={{ marginLeft: '8px' }} />
                     </button>
                     {secondaryButtonText && (
-                        <a 
-                            href={secondaryButtonLink} 
-                            className={`btn cta-button ${styleVariant === 'banner' ? 'btn-outline-white cta-animate-pulse' : 'btn-secondary-outline cta-animate-pulse'}`}
-                        >
-                            {secondaryButtonText}
-                        </a>
+                        onSecondaryButtonClick ? (
+                            <button 
+                                onClick={onSecondaryButtonClick}
+                                className={`btn cta-button ${styleVariant === 'banner' ? 'btn-outline-white cta-animate-pulse' : 'btn-secondary-outline cta-animate-pulse'}`}
+                            >
+                                {secondaryButtonText}
+                            </button>
+                        ) : (
+                            <a 
+                                href={secondaryButtonLink} 
+                                className={`btn cta-button ${styleVariant === 'banner' ? 'btn-outline-white cta-animate-pulse' : 'btn-secondary-outline cta-animate-pulse'}`}
+                            >
+                                {secondaryButtonText}
+                            </a>
+                        )
                     )}
                 </div>
             </div>
