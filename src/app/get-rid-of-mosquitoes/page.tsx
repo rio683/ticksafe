@@ -68,7 +68,7 @@ export default function GetRidOfMosquitoesPage() {
 
             {/* Split Hero Section */}
             <section className="hero-split">
-                <div className="hero-image-half" style={{ backgroundImage: 'url("/hero-mosquito-family.png")', filter: 'contrast(1.05)', backgroundPosition: 'center', backgroundSize: 'cover' }}></div>
+                <div className="hero-image-half" style={{ backgroundImage: 'url("/hero-mosquito-uploaded.jpg")', filter: 'contrast(1.05)', backgroundPosition: 'center', backgroundSize: 'cover' }}></div>
                 <div className="hero-text-half animate-fade-in-up">
                     <h1 style={{ fontSize: '3.5rem', lineHeight: '1.1', marginBottom: '1.5rem' }}>We Get Rid Of Mosquitoes</h1>
                     <p style={{ fontSize: '1.25rem', marginBottom: '2rem', color: '#4a5568' }}>Mosquitoes are worse than just annoying. Don’t risk it!</p>
