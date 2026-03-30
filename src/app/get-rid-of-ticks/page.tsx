@@ -149,11 +149,10 @@ export default function GetRidOfTicksPage() {
                     <CTASection 
                         styleVariant="heroBanner"
                         message="Ready to reclaim your backyard safely?"
-                        buttonText="CALL NOW 1300 842 572"
-                        onButtonClick={() => window.location.href = 'tel:1300842572'}
-                        secondaryButtonText="LETS CHAT"
-                        secondaryButtonLink="#"
-                        onSecondaryButtonClick={handleOpenQuote}
+                        buttonText="LETS CHAT"
+                        onButtonClick={handleOpenQuote}
+                        secondaryButtonText="CALL NOW 1300 842 572"
+                        secondaryButtonLink="tel:1300842572"
                     />
                 </div>
             </section>
