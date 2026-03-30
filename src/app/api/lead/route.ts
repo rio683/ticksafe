@@ -13,10 +13,15 @@ export async function POST(request: Request) {
         
         const resend = new Resend(apiKey);
         const body = await request.json();
-        const { first_name, last_name, email, phone, message, source_url } = body;
+        const { full_name, email, phone, message, source_url } = body;
+
+        // Split full_name for backward compatibility with email template
+        const nameParts = (full_name || '').trim().split(/\s+/);
+        const first_name = nameParts[0] || '';
+        const last_name = nameParts.slice(1).join(' ') || '';
 
         // Validation
-        if (!first_name || !last_name || !phone) {
+        if (!full_name || !phone) {
             return NextResponse.json(
                 { message: 'Missing required fields' },
                 { status: 400 }

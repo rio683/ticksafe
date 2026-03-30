@@ -21,8 +21,7 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
 
         const formData = new FormData(e.currentTarget);
         const data = {
-            first_name: formData.get('first_name'),
-            last_name: formData.get('last_name'),
+            full_name: formData.get('full_name'),
             email: formData.get('email'),
             phone: formData.get('phone'),
             message: formData.get('message'),
@@ -83,15 +82,9 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
                             </div>
 
                             <form onSubmit={handleSubmit} className="lead-form">
-                                <div className="form-row">
-                                    <div className="form-group flex-1">
-                                        <label htmlFor="first_name">First Name *</label>
-                                        <input type="text" id="first_name" name="first_name" required placeholder="John" />
-                                    </div>
-                                    <div className="form-group flex-1">
-                                        <label htmlFor="last_name">Last Name *</label>
-                                        <input type="text" id="last_name" name="last_name" required placeholder="Doe" />
-                                    </div>
+                                <div className="form-group">
+                                    <label htmlFor="full_name">Name *</label>
+                                    <input type="text" id="full_name" name="full_name" required placeholder="John Doe" />
                                 </div>
 
                                 <div className="form-group">
