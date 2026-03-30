@@ -23,11 +23,13 @@ export async function POST(request: Request) {
             );
         }
 
-        const fromAddress = process.env.RESEND_FROM || 'Ticksafe <onboarding@resend.dev>';
+        const fromAddress = process.env.RESEND_FROM || 'TickSafe Leads <leads@ticksafenews.com>';
+        const toAddressInput = process.env.RESEND_TO || 'rio@mindsheep.com.au';
+        const toAddresses = toAddressInput.split(',').map(email => email.trim());
 
         const { data, error } = await resend.emails.send({
             from: fromAddress,
-            to: process.env.RESEND_TO || 'rio@mindsheep.com.au',
+            to: toAddresses,
             subject: 'New TickSafe Lead',
             html: `
                 <h2>New Lead Received from TickSafe News</h2>

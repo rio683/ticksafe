@@ -16,7 +16,7 @@ export default function JeremyWebbArticle() {
         <main className="article-page">
             <header className="article-header">
                 <div className="container header-container">
-                    <a href="https://ticksafe.com.au/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://ticksafenews.com" target="_blank" rel="noopener noreferrer">
                         <img src="/logo-news.png" alt="TickSafe News & Updates" className="header-logo" />
                     </a>
                 </div>
@@ -83,7 +83,7 @@ export default function JeremyWebbArticle() {
 
                         <CTASection
                             styleVariant="card"
-                            message="Ticks are spreading across the Central Coast. Protect your property before peak tick season."
+                            message="Ticks are spreading across Northern Sydney. Protect your property before peak tick season."
                             buttonText="Get Free Tick Inspection"
                             onButtonClick={handleOpenQuote}
                         />

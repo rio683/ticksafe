@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LeadPopUp.css';
 import { X, CheckCircle, ShieldAlert } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface LeadPopUpProps {
     isOpen: boolean;
@@ -8,6 +9,7 @@ interface LeadPopUpProps {
 }
 
 export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
+    const router = useRouter();
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -38,10 +40,10 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
 
             if (response.ok) {
                 setSubmitted(true);
+                // Redirect to thank you page after a brief delay to let the user see the "Success" icon
                 setTimeout(() => {
-                    onClose();
-                    setSubmitted(false);
-                }, 4000);
+                    router.push('/thank-you');
+                }, 1500);
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Submission failed. Please try again or call us directly.');
@@ -71,7 +73,7 @@ export default function LeadPopUp({ isOpen, onClose }: LeadPopUpProps) {
                                 <ShieldAlert size={40} className="text-danger modal-icon" />
                                 <h2 className="modal-title">Secure Your Home Today</h2>
                                 <p className="modal-subtitle">
-                                    Don't wait. Enter your details below and our Central Coast experts will contact you for a free assessment.
+                                    Don't wait. Enter your details below and our Northern Sydney experts will contact you for a free assessment. (Since 2015)
                                 </p>
                                 {error && (
                                     <div className="error-message">

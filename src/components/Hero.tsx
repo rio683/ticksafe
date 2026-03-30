@@ -20,7 +20,7 @@ export default function Hero({ onOpenQuote }: { onOpenQuote: () => void }) {
                 />
                 <div className="badge animate-fade-in">
                     <ShieldAlert size={18} className="badge-icon" />
-                    <span>Central Coast's #1 Tick & Mozzie Experts</span>
+                    <span>Northern Sydney #1 Tick & Mozzie Experts. Since 2015</span>
                 </div>
 
                 <h1 className="hero-title animate-fade-in delay-100">

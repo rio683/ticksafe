@@ -20,6 +20,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Analytics 4 (GA4) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-V4V9HVT28X"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V4V9HVT28X');
+            gtag('config', 'G-00KSFNN3PC');
+            gtag('config', 'AW-936382651');
+          `}
+        </Script>
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"

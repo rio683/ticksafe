@@ -24,7 +24,7 @@ export default function Home() {
       <footer className="bg-light text-center" style={{ padding: '2rem', borderTop: '1px solid var(--color-border)' }}>
         <p className="text-muted" style={{ fontSize: '0.9rem' }}>
           &copy; {new Date().getFullYear()} Tick Safe & The Mozzie Team. All rights reserved. <br />
-          Serving the Central Coast, NSW.
+          Serving Northern Sydney. Since 2015
         </p>
       </footer>
 
